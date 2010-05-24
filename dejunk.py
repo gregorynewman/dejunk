@@ -22,8 +22,8 @@ junk_patterns = [
             'fillwith':[0x90, 0xEB],
         },
         {
-            'pattern':[0x36,0xEB],
-            'fillwith':[0x90,0xEB],
+            'pattern':[0x36,0xEB,0x01,'??'],
+            'fillwith':[0x90,0x90,0x90,0x90],
         },
         {
             'pattern':[0x3E, 0xEB],
@@ -47,6 +47,9 @@ def match_pattern(ea):
         opcode_bytes = []
         opcode_iterator = ea
         for byte in pattern['pattern']:
+            if byte == '??':
+                opcode_bytes.append(byte)
+                continue
             opcode_bytes.append(get_byte(opcode_iterator))
             opcode_iterator += 1
         if opcode_bytes == pattern['pattern']:
