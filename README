@@ -1,0 +1,27 @@
+dejunk.py
+
+by Gregory Newman (gregory.e.newman@gmail.com)
+May 25th, 2010
+
+This is a simple dejunking script for IDAPython.  Currently supports
+simple patterns with wildcards.  The pattern is as follows:
+
+{
+    'pattern':[0xEB,0x02,'??','??'],
+    'fillwith':[0x90, 0x90, 0x90, 0x90],
+}
+
+The pattern above will match EB 02 and the 2 bytes following as
+"wildcards".  The sizes of pattern and fillwith should be the same to
+avoid issues when patching.  End patterns work similarly but with no
+"fillwith" field.  Once patterns are set, use one of the following
+functions in the IDAPython console:
+
+dejunk_until_end()
+Searches for end patterns specified in end_patterns and dejunks
+code from cursor until found pattern.
+
+dejunk_selection()
+Hilight the area you wish to dejunk and execute this function to dejunk
+and re-analyze any code selected.
+
