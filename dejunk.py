@@ -42,6 +42,7 @@ junk_patterns = [
 end_patterns = [
         [0xC3],
         [0xC2,'??','??'],
+        [0xFF, 0x64, 0x24, 0xFC],
     ]
 
 
@@ -102,7 +103,7 @@ def dejunk_selection():
     print "Dejunking %X - %X" % (selection_start, selection_end)
     dejunk(selection_start, selection_end)
     do_unknown_range(selection_start, selection_size, DOUNK_SIMPLE) # un-analyze code
-    auto_make_code(selection_start, selection_end) # re-analyze to reflect patches
+    auto_make_code(selection_start) # re-analyze to reflect patches
 
 def dejunk_until_end():
     ea_start = get_screen_ea()
@@ -110,7 +111,7 @@ def dejunk_until_end():
     print "Dejunking %X - %X" % (ea_start, ea_end)
     dejunk(ea_start, ea_end)
     do_unknown_range(ea_start, ea_end, DOUNK_SIMPLE) # un-analyze code
-    auto_make_code(ea_start, ea_end) # re-analyze to reflect patches
+    auto_make_code(ea_start) # re-analyze to reflect patches
     
 
 def dejunk(ea_start, ea_end):
